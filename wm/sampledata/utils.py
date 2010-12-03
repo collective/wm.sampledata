@@ -4,7 +4,7 @@ from zope.component._api import getUtility, getMultiAdapter, queryMultiAdapter
 from plone.portlets.interfaces import IPortletManager, IPortletAssignmentMapping,\
     ILocalPortletAssignmentManager, IPortletAssignmentSettings
 from zope.container.interfaces import INameChooser
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_unicode, _createObjectByType
 import datetime
 import os
 from zope import event
@@ -18,18 +18,22 @@ IPSUM_PARAGRAPH = "<p>" + 10*IPSUM_LINE + "</p>"
 
 
 
-def getFile(module, path):
+def getFile(module, *path):
     """return the file located in module.
-    path can be ['directories','and','file.txt'] or 'file.txt'
+    if module is None, treat path as absolut path
+    path can be ['directories','and','file.txt'] or just 'file.txt'
     """
-    modPath = os.path.dirname(module.__file__)
+    modPath = ''
+    if module:
+        modPath = os.path.dirname(module.__file__)
+        
     if type(path)==str:
         path = [path]
     filePath = os.path.join(modPath, *path)
     return file(filePath)
 
-def getFileContent(module, path):
-    f = getFile(module, path)
+def getFileContent(module, *path):
+    f = getFile(module, *path)
     data =  safe_unicode(f.read())
     f.close()
     return data
@@ -56,12 +60,13 @@ def todayPlusDays(nrDays = 0, zopeDateTime=False):
         return date
 
 
-def eventAndReindex(folder, id):
+def eventAndReindex(obj):
     """fires an objectinitialized event and
     reindexes the object after creation so it can be found in the catalog
     """
-    event.notify(ObjectInitializedEvent(folder[id]))
-    folder.unrestrictedTraverse(id).reindexObject()
+    event.notify(ObjectInitializedEvent(obj))
+    obj.reindexObject()
+
 
 
 def workflowAds(home, wfdefs):
@@ -146,3 +151,29 @@ def blockPortlets(context, columnName='plone.leftcolumn', category='context', bl
 
 
 
+def createImage(context, id, file, title=''):
+    """create an image and return the object
+    """
+    _createObjectByType('Image', context, id, title=title)
+    context[id].setImage(file)
+    return context[id]
+
+def excludeFromNavigation(obj, exclude=True):
+    """excludes the given obj from navigation
+    make sure to reindex the object afterwards to make the
+    navigation portlet notice the change
+    """  
+
+    obj._md['excludeFromNav'] = exclude
+
+def getRelativePortalPath(context):
+    """return the path of the plonesite
+    """
+    url = getToolByName(context, 'portal_url')
+    return url.getPortalPath()
+
+def getRelativeContentPath(obj):
+    """return the path of the object
+    """
+    url = getToolByName(obj, 'portal_url')
+    return '/'.join(url.getRelativeContentPath(obj))

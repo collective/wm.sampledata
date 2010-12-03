@@ -27,7 +27,7 @@ class SampleDataView(BrowserView):
             IStatusMessage(self.request).addStatusMessage(u"error running %s: %s" % (plugin.title, str(e)) , 'error')
         finally:
             #return to listing
-            self.request.response.redirect(self.context.absolute_url() + '/'  + self.__name__)
+            self.request.response.redirect(self.context.absolute_url() + '/@@'  + self.__name__)
 
         
         
