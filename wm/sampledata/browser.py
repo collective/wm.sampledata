@@ -3,20 +3,26 @@ from zope.component import getUtilitiesFor, getUtility
 from wm.sampledata.interfaces import ISampleDataPlugin
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component.interfaces import ComponentLookupError
-
+from operator import itemgetter
 
 class SampleDataView(BrowserView):
 
     def listPlugins(self):
+        """list all available plugins sorted by their name
+        """
         plugins = []
         for name, util in getUtilitiesFor(ISampleDataPlugin):
             plugins.append(dict(name=name,
                                 title = util.title,
                                 description=util.description))
 
-        return plugins
+        return sorted(plugins, key=itemgetter('name'))
     
     def runPlugin(self,plugin):
+        """run a named plugin and redirect to the sampledata page again.
+        show a status message that tells the user if the plugin could not be found,
+        raised an error or ran successfully.
+        """
         try:
             plugin = getUtility(ISampleDataPlugin,name=plugin)
             plugin.generate(self.context)
