@@ -60,12 +60,13 @@ def todayPlusDays(nrDays = 0, zopeDateTime=False):
         return date
 
 
-def eventAndReindex(obj):
+def eventAndReindex(*objects):
     """fires an objectinitialized event and
-    reindexes the object after creation so it can be found in the catalog
+    reindexes the object(s) after creation so it can be found in the catalog
     """
-    event.notify(ObjectInitializedEvent(obj))
-    obj.reindexObject()
+    for obj in objects:
+        event.notify(ObjectInitializedEvent(obj))
+        obj.reindexObject()
 
 
 
@@ -177,3 +178,8 @@ def getRelativeContentPath(obj):
     """
     url = getToolByName(obj, 'portal_url')
     return '/'.join(url.getRelativeContentPath(obj))
+
+def doWorkflowTransition(obj, transition):
+    wft = getToolByName(obj, 'portal_workflow')
+    wft.doActionFor(obj, transition)
+    
