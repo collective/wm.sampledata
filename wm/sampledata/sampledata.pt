@@ -14,10 +14,11 @@
     <ul>
         <li tal:repeat="plugin view/listPlugins">
             <b><span tal:content="plugin/title">Plugin Title</span></b>
+            <a href="?plugin=name" tal:attributes="href string:@@${view/__name__}/run?plugin=${plugin/name}">run this plugin</a>
             <br/>
             <span class="discreet" tal:content="plugin/description">Some descriptive text</span>
             <br/>
-            <a href="?plugin=name" tal:attributes="href string:@@${view/__name__}/run?plugin=${plugin/name}">run <span tal:content="plugin/title">this</span> plugin</a>
+
         </li>
     </ul>
     
