@@ -10,6 +10,7 @@ import os
 from zope import event
 from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
+from types import ListType
 
 IPSUM_LINE = "Lorem ipsum mel augue antiopam te. Invidunt constituto accommodare ius cu. Et cum solum liber doming, mel eu quem modus, sea probo putant ex."
 
@@ -26,7 +27,7 @@ def getFile(module, *path):
     modPath = ''
     if module:
         modPath = os.path.dirname(module.__file__)
-        
+
     if type(path)==str:
         path = [path]
     filePath = os.path.join(modPath, *path)
@@ -163,7 +164,7 @@ def excludeFromNavigation(obj, exclude=True):
     """excludes the given obj from navigation
     make sure to reindex the object afterwards to make the
     navigation portlet notice the change
-    """  
+    """
 
     obj._md['excludeFromNav'] = exclude
 
@@ -179,7 +180,23 @@ def getRelativeContentPath(obj):
     url = getToolByName(obj, 'portal_url')
     return '/'.join(url.getRelativeContentPath(obj))
 
+
 def doWorkflowTransition(obj, transition):
+    """to the workflow transition on the specified object
+    """
     wft = getToolByName(obj, 'portal_workflow')
     wft.doActionFor(obj, transition)
-    
+
+def doWorkflowTransitions(objects=[], transition='publish', includeChildren=False):
+    """use this to publish a/some folder(s) optionally including their child elements
+    """
+
+    if not objects:
+        return
+    if type(objects) != ListType:
+        objects = [objects,]
+
+    utils = getToolByName(objects[0], 'plone_utils')
+    for obj in objects:
+        path='/'.join(obj.getPhysicalPath())
+        utils.transitionObjectsByPaths(workflow_action=transition, paths=[path], include_children=includeChildren)
