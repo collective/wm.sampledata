@@ -40,7 +40,7 @@ def getFileContent(module, *path):
 
 
 
-def deleteItems(folder, ids=[]):
+def deleteItems(folder, *ids):
     """delete items in a folder and don't complain if they do not exist.
     """
     for itemId in ids:
