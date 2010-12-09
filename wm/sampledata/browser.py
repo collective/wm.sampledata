@@ -18,7 +18,7 @@ class SampleDataView(BrowserView):
 
         return sorted(plugins, key=itemgetter('name'))
 
-    def runPlugin(self,plugin):
+    def runPlugin(self,plugin,debug=False):
         """run a named plugin and redirect to the sampledata page again.
         show a status message that tells the user if the plugin could not be found,
         raised an error or ran successfully.
@@ -32,6 +32,8 @@ class SampleDataView(BrowserView):
         except Exception, e:
             IStatusMessage(self.request).addStatusMessage(u"error running %s: %s" % (plugin.title, str(e)) , 'error')
             #TODO: log stacktrace to error log
+            if debug:
+                raise e
         finally:
             #return to listing
             self.request.response.redirect(self.context.absolute_url() + '/@@'  + self.__name__)
