@@ -76,13 +76,13 @@ please `drop me a mail`_
 
 
 z3c.sampledata
-    Would do the same and much more (dependencies, configuration ui for each plugin)
+    Would do the same and much more (dependencies, groups, configuration ui for each plugin)
 
     for me it was too complex to get it running on my zope2 instance and it
     seems to be tailored for zope3 anyway.
     
     Basically it would be great to make wm.sampledata use z3c.sampledata
-    and provide plone spezific plugins for it.
+    and provide plone specific plugins for it.
 
     .. http://comments.gmane.org/gmane.comp.web.zope.plone.devel/17379
 
