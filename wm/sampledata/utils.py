@@ -153,10 +153,11 @@ def blockPortlets(context, columnName='plone.leftcolumn', category='context', bl
 
 
 
-def createImage(context, id, file, title=''):
+def createImage(context, id, file, title='', description=''):
     """create an image and return the object
     """
-    _createObjectByType('Image', context, id, title=title)
+    _createObjectByType('Image', context, id, title=title,
+                        description=description)
     context[id].setImage(file)
     return context[id]
 
