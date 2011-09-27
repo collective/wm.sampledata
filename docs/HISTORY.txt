@@ -4,6 +4,10 @@ Changelog
 after 0.1
 ---------
 
+- ``SampledataView.runPlugin`` returns the result of ``Plugin.generate``.
+  This makes it easy to check if the plugin was sucessfully run in unittests.
+
+
 - fix links for running plugins so they work for
   http://host/plonesite/@@sampledata, too.
   (not just http://host/@@sampledata)
