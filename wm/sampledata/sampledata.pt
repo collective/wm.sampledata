@@ -10,16 +10,16 @@
 
 <metal:main fill-slot="main">
     <h1 i18n:translate="">Generate Sampledata</h1>
-    
+
     <ul>
         <li tal:repeat="plugin view/listPlugins">
             <b><span tal:content="plugin/title">Plugin Title</span></b>
-            <a href="?plugin=name" tal:attributes="href string:@@${view/__name__}/run?plugin=${plugin/name}">run this plugin</a>
+            <a href="?plugin=name" tal:attributes="href string:run?plugin=${plugin/name}">run this plugin</a>
             <br/>
             <p class="discreet" tal:content="plugin/description">Some descriptive text</p>
         </li>
     </ul>
-    
+
 </metal:main>
 
 </body>

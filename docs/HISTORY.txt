@@ -1,6 +1,14 @@
 Changelog
 =========
 
+after 0.1
+---------
+
+- fix links for running plugins so they work for
+  http://host/plonesite/@@sampledata, too.
+  (not just http://host/@@sampledata)
+  [fRiSi]
+
 0.1 (2011-01-31)
 ----------------
 
