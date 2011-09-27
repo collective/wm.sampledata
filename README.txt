@@ -32,9 +32,9 @@ Writing and registering your custom sampledata plugin is very easy::
         title = u"My Plugin Content"
         description = u"Creates a portlet"
 
-    def generate(self, context):
-        portlet = StaticAssignment(u"Sample Portlet", "<p>some content</p>")
-        addPortlet(context, 'plone.leftcolumn', portlet)
+        def generate(self, context):
+            portlet = StaticAssignment(u"Sample Portlet", "<p>some content</p>")
+            addPortlet(context, 'plone.leftcolumn', portlet)
 
     myPlugin = MyPlugin()
     component.provideUtility(myPlugin,
