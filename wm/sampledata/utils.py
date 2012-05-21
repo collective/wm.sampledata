@@ -201,3 +201,26 @@ def doWorkflowTransitions(objects=[], transition='publish', includeChildren=Fals
     for obj in objects:
         path='/'.join(obj.getPhysicalPath())
         utils.transitionObjectsByPaths(workflow_action=transition, paths=[path], include_children=includeChildren)
+
+
+def constrainTypes(obj, allowed=[], notImmediate=[]):
+    """sets allowed and immediately addable types for obj.
+
+    to only allow news and images and make both immediately addable use::
+
+       constrainTypes(portal.newsfolder, ['News Item', 'Image'])
+
+    if images should not be immediately addable you would use::
+
+       constrainTypes(portal.newsfolder, ['News Item', 'Image'], notImmediate=['Image'])
+    """
+
+    obj.setConstrainTypesMode(1)
+    obj.setLocallyAllowedTypes(allowed)
+
+    if notImmediate:
+        immediate = [type for type in allowed if type not in notImmediate]
+    else:
+        immediate = allowed
+    obj.setImmediatelyAddableTypes(immediate)
+

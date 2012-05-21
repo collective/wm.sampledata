@@ -104,3 +104,13 @@ z3c.sampledata
 collective.contentgenerator
     looks like this is meant for creating (random) sampledata for stresstests
 
+
+
+
+Ideas
+=====
+
+Integrate
+http://lorempixel.com/
+https://github.com/collective/collective.loremipsum/blob/master/README.rst
+

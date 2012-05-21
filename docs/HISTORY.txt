@@ -9,6 +9,10 @@ after 0.2
   (not just http://host/@@sampledata)
   [fRiSi]
 
+- added utility method `constrainTypes` to set
+  which objects an be added to folderish objects
+  [fRiSi]
+
 0.2 (2011-12-02)
 ----------------
 
