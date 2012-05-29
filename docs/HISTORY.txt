@@ -1,8 +1,8 @@
 Changelog
 =========
 
-after 0.2
----------
+0.2.1 (2012-05-29)
+------------------
 
 - fix links for running plugins so they work for
   http://host/plonesite/@@sampledata, too.

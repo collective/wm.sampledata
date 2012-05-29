@@ -111,6 +111,6 @@ Ideas
 =====
 
 Integrate
-http://lorempixel.com/
-https://github.com/collective/collective.loremipsum/blob/master/README.rst
+* http://lorempixel.com/
+* https://github.com/collective/collective.loremipsum/blob/master/README.rst
 
