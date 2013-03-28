@@ -114,3 +114,7 @@ Integrate
 * http://lorempixel.com/
 * https://github.com/collective/collective.loremipsum/blob/master/README.rst
 
+compare to
+* https://pypi.python.org/pypi/zopyx.ipsumplone/0.2.1
+* https://pypi.python.org/pypi/collective.lorem/0.2.3
+
