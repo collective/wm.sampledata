@@ -7,6 +7,11 @@ Changelog
 - add traceback logging on errors
   [saily]
 
+- added utility functions (``utils.getImage`` and
+  ``utils.getRandomImage``) to download images from lorempixel.com 
+  (see wm.sampledata.example for usage)
+  [fRiSi]
+
 0.2.1 (2012-05-29)
 ------------------
 

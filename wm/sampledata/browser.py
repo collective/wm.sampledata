@@ -38,7 +38,7 @@ class SampleDataView(BrowserView):
                 raise e
         except Exception, e:
             IStatusMessage(self.request).addStatusMessage(u"error running %s: %s" % (plugin.title, str(e)) , 'error')
-            logger.exception("error running %s" % (plugin.title))
+            logger.exception("error running %s - try @@sampledata/run?plugin=<plugin-name>&debug=True" % (plugin.title))
 
             if debug:
                 raise e

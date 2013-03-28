@@ -26,15 +26,23 @@ The screen above shows the example plugin activated via ``<include package="wm.s
 
 Writing and registering your custom sampledata plugin is very easy::
 
+	from wm.sampledata import utils
+	
     class MyPlugin(object):
         implements(ISampleDataPlugin)
 
         title = u"My Plugin Content"
-        description = u"Creates a portlet"
+        description = u"Creates a portlet and a random image"
 
         def generate(self, context):
             portlet = StaticAssignment(u"Sample Portlet", "<p>some content</p>")
-            addPortlet(context, 'plone.leftcolumn', portlet)
+            utils.addPortlet(context, 'plone.leftcolumn', portlet)
+            
+            utils.createImage(context, 'random-nature.jpg',
+                        file = utils.getRandomImage(category='nature', gray=False),
+                    	title=u"Random Image",
+                    	description=u"Downloaded from lorempixel.com")
+
 
     myPlugin = MyPlugin()
     component.provideUtility(myPlugin,
@@ -47,7 +55,8 @@ for a complete example of a custom plugin.
 .. __: http://dev.plone.org/collective/browser/wm.sampledata/trunk/wm/sampledata/example
 
 There is a growing set of utility methods in ``wm.sampledata.utils`` (eg for
-handling portlets and files) which you can use in your plugins.
+handling portlets and files, or download images from http://lorempixel.com)
+which you can use in your plugins.
 
 
 Installation
@@ -77,12 +86,6 @@ A while ago i `asked what other people do on plone.users`__
 .. __: http://plone.293351.n2.nabble.com/Best-way-to-create-sampledata-for-tests-and-development-tp338487p338487.html
 
 
-If you have any ideas for improvement or know another alternative to this package
-please `drop me a mail`_
-
-.. _`drop me a mail`: mailto:harald (at) webmeisterei dot com
-
-
 z3c.sampledata
     Would do the same and much more (dependencies, groups, configuration ui for each plugin)
 
@@ -107,14 +110,14 @@ collective.contentgenerator
 
 
 
-Ideas
-=====
+Need to try out these and describe/compare in this section too:
 
-Integrate
-* http://lorempixel.com/
-* https://github.com/collective/collective.loremipsum/blob/master/README.rst
+* https://github.com/collective/collective.loremipsum
+* https://pypi.python.org/pypi/zopyx.ipsumplone/
+* https://pypi.python.org/pypi/collective.lorem/
 
-compare to
-* https://pypi.python.org/pypi/zopyx.ipsumplone/0.2.1
-* https://pypi.python.org/pypi/collective.lorem/0.2.3
 
+If you have any ideas for improvement or know another alternative to this package
+please `drop me a mail`_
+
+.. _`drop me a mail`: mailto:harald (at) webmeisterei dot com

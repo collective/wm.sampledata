@@ -11,6 +11,10 @@ from zope import event
 from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
 from types import ListType
+from images import _getImage, _getRandomImage
+
+getImage = _getImage 
+getRandomImage = _getRandomImage
 
 IPSUM_LINE = "Lorem ipsum mel augue antiopam te. Invidunt constituto accommodare ius cu. Et cum solum liber doming, mel eu quem modus, sea probo putant ex."
 
