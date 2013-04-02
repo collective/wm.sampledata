@@ -12,6 +12,8 @@ from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
 from types import ListType
 from images import _getImage, _getRandomImage
+from plone.portlets.constants import GROUP_CATEGORY, CONTENT_TYPE_CATEGORY,\
+    CONTEXT_CATEGORY
 
 getImage = _getImage 
 getRandomImage = _getRandomImage
@@ -112,7 +114,21 @@ def removePortlet(context, portletName, columnName='plone.leftcolumn'):
     # throws a keyerror if the portlet does not exist
     del assignmentMapping[portletName]
 
+def blockPortlets(context, columnName='plone.leftcolumn', inherited=None, group=None, contenttype=None):
+    """True will block portlets, False will show them, None will skip settings.
+    """
 
+    manager = getUtility(IPortletManager, name=columnName)
+    assignable = getMultiAdapter((context, manager), ILocalPortletAssignmentManager)
+    
+    if group is not None:
+        assignable.setBlacklistStatus(GROUP_CATEGORY, group)
+    if contenttype is not None:
+        assignable.setBlacklistStatus(CONTENT_TYPE_CATEGORY, contenttype)
+    if inherited is not None:
+        assignable.setBlacklistStatus(CONTEXT_CATEGORY, inherited)
+        
+    
 def hidePortlet(context, portletName, columnName='plone.leftcolumn'):
     manager = getUtility(IPortletManager, columnName)
     assignmentMapping = getMultiAdapter((context, manager),IPortletAssignmentMapping)
@@ -141,19 +157,7 @@ def setPortletWeight(portlet, weight):
         pass
 
 
-def blockPortlets(context, columnName='plone.leftcolumn', category='context', block=None):
-    """
-    category:  context, content_type, group
 
-    block:
-      None - aquire settings
-      True - block
-      False - show
-    """
-
-    manager = getUtility(IPortletManager, name=columnName)
-    assignable = queryMultiAdapter((context, manager), ILocalPortletAssignmentManager)
-    assignable.setBlacklistStatus(category, block)
 
 
 

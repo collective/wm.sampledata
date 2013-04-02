@@ -12,6 +12,10 @@ Changelog
   (see wm.sampledata.example for usage)
   [fRiSi]
 
+- more intuitive syntax for blockPortlets
+  (change breaks backward compatibility)
+  [fRiSi]
+  
 0.2.1 (2012-05-29)
 ------------------
 
