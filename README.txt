@@ -97,6 +97,14 @@ z3c.sampledata
 
     .. http://comments.gmane.org/gmane.comp.web.zope.plone.devel/17379
 
+
+`zopyx.ipsumplone`_
+    Seems to provide very similar utility methods.
+    No pluggable Generators, No User-Interface
+        
+	.. _`zopyx.ipsumplone`: https://pypi.python.org/pypi/zopyx.ipsumplone/
+
+
 `ely.contentgenerator`_
     provides a xml syntax to create samplecontent,
     might be useful to use in custom plugins
@@ -108,13 +116,20 @@ collective.contentgenerator
     looks like this is meant for creating (random) sampledata for stresstests
 
 
+`collective.lorem`_
+	content action to fill content with lorem-ipsum text and provides `utility methods
+	<http://svn.plone.org/svn/collective/collective.lorem/trunk/collective/lorem/generation.txt>`_
+	`createStandardContent` to create random content (news, documents, files, image)
+	and `createNestedStructure` to create arbitrary nested folder structures.
+	
+	.. _`collective.lorem`: http://pypi.python.org/pypi/collective.lorem/
 
 
-Need to try out these and describe/compare in this section too:
+`collective.loremipsum`_
+	Allows to create members (names taken from fakenamegenerator.com)
+		
+	.. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum 
 
-* https://github.com/collective/collective.loremipsum
-* https://pypi.python.org/pypi/zopyx.ipsumplone/
-* https://pypi.python.org/pypi/collective.lorem/
 
 
 If you have any ideas for improvement or know another alternative to this package
