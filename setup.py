@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2.1'
+version = '0.2.2'
 
 setup(name='wm.sampledata',
       version=version,
@@ -16,7 +16,7 @@ setup(name='wm.sampledata',
       keywords='plone sampledata generation',
       author='Harald Friessnegger',
       author_email='harald (at) webmeisterei dot com',
-      url='https://svn.plone.org/svn/collective/wm.sampledata/',
+      url='https://github.com/collective/wm.sampledata',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['wm'],
