@@ -6,12 +6,15 @@ version = '0.2.2'
 setup(name='wm.sampledata',
       version=version,
       description="UI and utility methods to generate sampledata for Plone projects",
-      long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=open("README.rst").read() + "\n" +
+                       open(os.path.join("docs", "HISTORY.rst")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
+        'Framework :: Plone', 
+        'Framework :: Plone :: 4.1',
+        'Framework :: Plone :: 4.2', 
         ],
       keywords='plone sampledata generation',
       author='Harald Friessnegger',
