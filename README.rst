@@ -131,6 +131,12 @@ collective.contentgenerator
 	.. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum 
 
 
+`zettwerk.setup`_
+    contains utility methods for setuphandlers. the one in structure.py offers 
+    a method to create content out of a list of dictionaries.
+
+    .. _`zettwerk.setup`: https://github.com/collective/zettwerk.setup/blob/master/zettwerk/setup/structure.py
+
 
 If you have any ideas for improvement or know another alternative to this package
 please `drop me a mail`_
