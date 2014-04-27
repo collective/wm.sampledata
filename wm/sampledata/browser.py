@@ -43,9 +43,10 @@ class SampleDataView(BrowserView):
             if debug:
                 raise e
         finally:
-            #return to listing
-            self.request.response.redirect(self.context.absolute_url() + '/@@' + self.__name__)
-            return result
+            if not debug:
+                #return to listing
+                self.request.response.redirect(self.context.absolute_url() + '/@@' + self.__name__)
+                return result
 
 
 

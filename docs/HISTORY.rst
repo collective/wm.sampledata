@@ -1,6 +1,11 @@
 Changelog
 #########
 
+dev
+===
+
+- errors raised in finally clause did not pop up with debug=True
+
 0.2.2 (2013-05-08)
 ==================
 
