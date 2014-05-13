@@ -101,7 +101,7 @@ z3c.sampledata
 `zopyx.ipsumplone`_
     Seems to provide very similar utility methods.
     No pluggable Generators, No User-Interface
-        
+
 	.. _`zopyx.ipsumplone`: https://pypi.python.org/pypi/zopyx.ipsumplone/
 
 
@@ -121,22 +121,43 @@ collective.contentgenerator
 	<http://svn.plone.org/svn/collective/collective.lorem/trunk/collective/lorem/generation.txt>`_
 	`createStandardContent` to create random content (news, documents, files, image)
 	and `createNestedStructure` to create arbitrary nested folder structures.
-	
+
 	.. _`collective.lorem`: http://pypi.python.org/pypi/collective.lorem/
 
 
 `collective.loremipsum`_
 	Allows to create members (names taken from fakenamegenerator.com)
-		
-	.. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum 
+
+	.. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum
 
 
 `zettwerk.setup`_
-    contains utility methods for setuphandlers. the one in structure.py offers 
+    contains utility methods for setuphandlers. the one in structure.py offers
     a method to create content out of a list of dictionaries.
 
     .. _`zettwerk.setup`: https://github.com/collective/zettwerk.setup/blob/master/zettwerk/setup/structure.py
 
+
+TODO
+====
+
+Include Ipsum Ipsum text obtained via the api from http://www.randomtext.me/
+
+(for other interesting/funny generators see
+http://designshack.net/articles/inspiration/30-useful-and-hilarious-lorem-ipsum-generators/)
+
+use plone.api in utility methods or replace them with plone.api where
+appropriate
+
+eventually provide api to use fakenamegenerator.com for names
+(collective.loremipsum already uses that)
+
+
+
+
+
+Contribute
+==========
 
 If you have any ideas for improvement or know another alternative to this package
 please `drop me a mail`_
