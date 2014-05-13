@@ -169,6 +169,12 @@ def createImage(context, id, file, title='', description=''):
     context[id].setImage(file)
     return context[id]
 
+def createFile(context, id, file, title='', description=''):
+    _createObjectByType('File', context, id, title=title,
+                        description=description)
+    context[id].setFile(file)
+    return context[id]
+
 def excludeFromNavigation(obj, exclude=True):
     """excludes the given obj from navigation
     make sure to reindex the object afterwards to make the
