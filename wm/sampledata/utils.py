@@ -1,26 +1,26 @@
 from zExceptions import BadRequest
 from DateTime.DateTime import DateTime
 from zope.component._api import getUtility, getMultiAdapter, queryMultiAdapter
-from plone.portlets.interfaces import IPortletManager, IPortletAssignmentMapping,\
+from plone.portlets.interfaces import IPortletManager, IPortletAssignmentMapping, \
     ILocalPortletAssignmentManager, IPortletAssignmentSettings
 from zope.container.interfaces import INameChooser
-from Products.CMFPlone.utils import safe_unicode, _createObjectByType
+from Products.CMFPlone.utils import safe_unicode
 import datetime
 import os
 from zope import event
 from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
 from types import ListType
-from images import _getImage, _getRandomImage
-from plone.portlets.constants import GROUP_CATEGORY, CONTENT_TYPE_CATEGORY,\
+from wm.sampledata.images import getImage
+from wm.sampledata.images import getRandomImage
+from plone.portlets.constants import GROUP_CATEGORY, CONTENT_TYPE_CATEGORY, \
     CONTEXT_CATEGORY
 
-getImage = _getImage 
-getRandomImage = _getRandomImage
+
 
 IPSUM_LINE = "Lorem ipsum mel augue antiopam te. Invidunt constituto accommodare ius cu. Et cum solum liber doming, mel eu quem modus, sea probo putant ex."
 
-IPSUM_PARAGRAPH = "<p>" + 10*IPSUM_LINE + "</p>"
+IPSUM_PARAGRAPH = "<p>" + 10 * IPSUM_LINE + "</p>"
 
 
 
@@ -34,14 +34,14 @@ def getFile(module, *path):
     if module:
         modPath = os.path.dirname(module.__file__)
 
-    if type(path)==str:
+    if type(path) == str:
         path = [path]
     filePath = os.path.join(modPath, *path)
     return file(filePath)
 
 def getFileContent(module, *path):
     f = getFile(module, *path)
-    data =  safe_unicode(f.read())
+    data = safe_unicode(f.read())
     f.close()
     return data
 
@@ -58,9 +58,9 @@ def deleteItems(folder, *ids):
         except AttributeError:
             pass
 
-def todayPlusDays(nrDays = 0, zopeDateTime=False):
+def todayPlusDays(nrDays=0, zopeDateTime=False):
     today = datetime.date.today()
-    date =  today + datetime.timedelta(days = nrDays)
+    date = today + datetime.timedelta(days=nrDays)
     if zopeDateTime:
         return DateTime(date.isoformat())
     else:
@@ -104,13 +104,13 @@ def addPortlet(context, columnName='plone.leftcolumn', assignment=None):
     if not assignment:
         return
     column = getUtility(IPortletManager, columnName)
-    manager = getMultiAdapter((context, column),IPortletAssignmentMapping)
+    manager = getMultiAdapter((context, column), IPortletAssignmentMapping)
     chooser = INameChooser(manager)
     manager[chooser.chooseName(None, assignment)] = assignment
 
 def removePortlet(context, portletName, columnName='plone.leftcolumn'):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter((context, manager),IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     # throws a keyerror if the portlet does not exist
     del assignmentMapping[portletName]
 
@@ -131,7 +131,7 @@ def blockPortlets(context, columnName='plone.leftcolumn', inherited=None, group=
     
 def hidePortlet(context, portletName, columnName='plone.leftcolumn'):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter((context, manager),IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     settings = IPortletAssignmentSettings(assignmentMapping[portletName])
     settings['visible'] = False
 
@@ -139,7 +139,7 @@ def hidePortlet(context, portletName, columnName='plone.leftcolumn'):
 
 def hasPortlet(context, portletName, columnName='plone.leftcolumn'):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter((context, manager),IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     return assignmentMapping.has_key(portletName)
 
 def setPortletWeight(portlet, weight):
@@ -164,14 +164,14 @@ def setPortletWeight(portlet, weight):
 def createImage(context, id, file, title='', description=''):
     """create an image and return the object
     """
-    _createObjectByType('Image', context, id, title=title,
-                        description=description)
+    context.invokeFactory('Image', id, title=title,
+                          description=description)
     context[id].setImage(file)
     return context[id]
 
 def createFile(context, id, file, title='', description=''):
-    _createObjectByType('File', context, id, title=title,
-                        description=description)
+    context.invokeFactory('File', id, title=title,
+                          description=description)
     context[id].setFile(file)
     return context[id]
 
@@ -209,11 +209,11 @@ def doWorkflowTransitions(objects=[], transition='publish', includeChildren=Fals
     if not objects:
         return
     if type(objects) != ListType:
-        objects = [objects,]
+        objects = [objects, ]
 
     utils = getToolByName(objects[0], 'plone_utils')
     for obj in objects:
-        path='/'.join(obj.getPhysicalPath())
+        path = '/'.join(obj.getPhysicalPath())
         utils.transitionObjectsByPaths(workflow_action=transition, paths=[path], include_children=includeChildren)
 
 

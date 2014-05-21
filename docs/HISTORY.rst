@@ -9,6 +9,10 @@ dev
 - added utility function ``createFile`` to create file-content the same way
   as ``createImage`` creates image-content.
 
+- replace _createObjectByType with invokeFactory since - despite a little better
+  performance - it has some nasty side-effects. eg the ``_at_creation_flag`` is
+  is not properly handeled
+
 0.2.2 (2013-05-08)
 ==================
 

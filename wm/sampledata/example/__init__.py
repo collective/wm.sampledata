@@ -3,7 +3,6 @@ from wm.sampledata.interfaces import ISampleDataPlugin
 from wm.sampledata.utils import addPortlet, getFileContent, IPSUM_PARAGRAPH,\
     deleteItems, eventAndReindex, doWorkflowTransitions, createImage
 from plone.portlet.static.static import Assignment as StaticAssignment
-from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFCore.utils import getToolByName
 from wm.sampledata.utils import getRandomImage
 
@@ -21,9 +20,7 @@ that displays contact information."""
         #delete sample document if it exists
         deleteItems(context, pageId)
         
-        #create it w/o security checks
-        _createObjectByType('Document', context, id=pageId,
-                            title=u"Sample Document",)
+        context.invokeFactory('Document', id=pageId, title=u"Sample Document")
         page = context[pageId]
         
         #download image from lorempixel.com - force colour images from category nature

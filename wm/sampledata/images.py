@@ -66,7 +66,7 @@ CATEGORIES = ['abstract','animals','business','cats','city','food','nightlife',
               'fashion','people','nature','sports','technics','transport',]
 
     
-def _getImage(width=1024, height=768, category=None, gray=False, index=None, text=None):
+def getImage(width=1024, height=768, category=None, gray=False, index=None, text=None):
     """obtains an image from lorempixel.com
     
     for possible categories see ``CATEGORIES``
@@ -94,16 +94,19 @@ def _getImage(width=1024, height=768, category=None, gray=False, index=None, tex
 
 RATIOS = [(16,9), (4,3)]
 
-def _getRandomImage(long_edge=1024, category=None, gray=None):
+def getRandomImage(long_edge=1024, category=None, gray=None, landscape=None, ratios=RATIOS):
     """returns a random image from lorempixel.com (portrait or landscape) in one of the available
     RATIOS
     
     set gray to True to force grayscale pictures and to False to force color 
     pictures
     """
-    ratio = random.choice(RATIOS)
+    ratio = random.choice(ratios)
     ratio = float(ratio[0])/ratio[1]
-    landscape = random.choice([True, False])
+    
+    if landscape is None:
+        landscape = random.choice([True, False])
+        
     if gray is None:
         gray = random.choice([True, False])
         
@@ -114,4 +117,4 @@ def _getRandomImage(long_edge=1024, category=None, gray=None):
         height = long_edge
         width = int(long_edge / ratio)
 
-    return _getImage(width, height, category=category, gray=gray)
+    return getImage(width, height, category=category, gray=gray)
