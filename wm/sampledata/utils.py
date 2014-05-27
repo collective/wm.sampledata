@@ -238,3 +238,19 @@ def constrainTypes(obj, allowed=[], notImmediate=[]):
         immediate = allowed
     obj.setImmediatelyAddableTypes(immediate)
 
+
+def raptus_hide_for(item, component):
+    """hide the specified item in the `raptus.article` component given by it's name
+    (eg. ``(item=<Image>, component='imageslider.teaser')`` ) 
+    """
+    components = list(item.Schema()['components'].get(item))
+    item.Schema()['components'].set(item, [c for c in components if not c == component])
+    item.reindexObject()
+
+def raptus_show_for(item, component):
+    """show the specified item in the `raptus.article` component given by it's name
+    (eg. ``(item=<Image>, component='imageslider.teaser')`` ) 
+    """    
+    components = list(item.Schema()['components'].get(item))
+    item.Schema()['components'].set(item, [c for c in components if not c == component])
+    item.reindexObject()

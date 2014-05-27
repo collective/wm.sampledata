@@ -13,6 +13,12 @@ dev
   performance - it has some nasty side-effects. eg the ``_at_creation_flag`` is
   is not properly handeled
 
+- added utility function ``raptus_hide_for`` and ``raptus_show_for`` to be able
+  to hide and show content items in specific raptus.article components.
+
+  (see https://pypi.python.org/pypi/raptus.article.default for more information
+  on raptus.article)
+
 0.2.2 (2013-05-08)
 ==================
 
