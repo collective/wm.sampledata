@@ -4,6 +4,9 @@ Changelog
 dev
 ===
 
+- utils.doWorkflowTransition uses plone_utils internally since
+  portal_workflow.doActionFor does not set the effective date when publishing
+
 - errors raised in finally clause did not pop up with debug=True
 
 - added utility function ``createFile`` to create file-content the same way

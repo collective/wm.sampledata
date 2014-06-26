@@ -120,15 +120,15 @@ def blockPortlets(context, columnName='plone.leftcolumn', inherited=None, group=
 
     manager = getUtility(IPortletManager, name=columnName)
     assignable = getMultiAdapter((context, manager), ILocalPortletAssignmentManager)
-    
+
     if group is not None:
         assignable.setBlacklistStatus(GROUP_CATEGORY, group)
     if contenttype is not None:
         assignable.setBlacklistStatus(CONTENT_TYPE_CATEGORY, contenttype)
     if inherited is not None:
         assignable.setBlacklistStatus(CONTEXT_CATEGORY, inherited)
-        
-    
+
+
 def hidePortlet(context, portletName, columnName='plone.leftcolumn'):
     manager = getUtility(IPortletManager, columnName)
     assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
@@ -198,9 +198,12 @@ def getRelativeContentPath(obj):
 
 def doWorkflowTransition(obj, transition):
     """to the workflow transition on the specified object
+    we don't use wft.doActionFor directly since this does not set the effective
+    data
     """
-    wft = getToolByName(obj, 'portal_workflow')
-    wft.doActionFor(obj, transition)
+
+    doWorkflowTransitions([obj], transition)
+
 
 def doWorkflowTransitions(objects=[], transition='publish', includeChildren=False):
     """use this to publish a/some folder(s) optionally including their child elements
@@ -241,7 +244,7 @@ def constrainTypes(obj, allowed=[], notImmediate=[]):
 
 def raptus_hide_for(item, component):
     """hide the specified item in the `raptus.article` component given by it's name
-    (eg. ``(item=<Image>, component='imageslider.teaser')`` ) 
+    (eg. ``(item=<Image>, component='imageslider.teaser')`` )
     """
     components = list(item.Schema()['components'].get(item))
     item.Schema()['components'].set(item, [c for c in components if not c == component])
@@ -249,8 +252,8 @@ def raptus_hide_for(item, component):
 
 def raptus_show_for(item, component):
     """show the specified item in the `raptus.article` component given by it's name
-    (eg. ``(item=<Image>, component='imageslider.teaser')`` ) 
-    """    
+    (eg. ``(item=<Image>, component='imageslider.teaser')`` )
+    """
     components = list(item.Schema()['components'].get(item))
     item.Schema()['components'].set(item, [c for c in components if not c == component])
     item.reindexObject()
