@@ -1,8 +1,8 @@
 Changelog
 #########
 
-dev
-===
+0.3 (2014-08-25)
+================
 
 - utils.doWorkflowTransition uses plone_utils internally since
   portal_workflow.doActionFor does not set the effective date when publishing
