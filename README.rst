@@ -27,7 +27,7 @@ The screen above shows the example plugin activated via ``<include package="wm.s
 Writing and registering your custom sampledata plugin is very easy::
 
 	from wm.sampledata import utils
-	
+
     class MyPlugin(object):
         implements(ISampleDataPlugin)
 
@@ -37,7 +37,7 @@ Writing and registering your custom sampledata plugin is very easy::
         def generate(self, context):
             portlet = StaticAssignment(u"Sample Portlet", "<p>some content</p>")
             utils.addPortlet(context, 'plone.leftcolumn', portlet)
-            
+
             utils.createImage(context, 'random-nature.jpg',
                         file = utils.getRandomImage(category='nature', gray=False),
                     	title=u"Random Image",
@@ -53,6 +53,26 @@ See `wm.sampledata.example`__
 for a complete example of a custom plugin.
 
 .. __: http://dev.plone.org/collective/browser/wm.sampledata/trunk/wm/sampledata/example
+
+
+
+You can also group plugins (and even other plugin-gropus) so users need to run only one plugin to setup their sampledata correctly::
+
+    from wm.sampledata import PluginGroup
+
+    class TestPortal(PluginGroup):
+
+        PLUGINS = [
+           MyPlugin,  # also 'my.plugin' could be used
+           MainMenu,
+           AnotherPluginGroup,
+        ]
+
+    title = u"Complete Test Portal"
+    description = u"Creates Main Menu items, Sampledata Folder and Portlets"
+
+Note that you can use the utility names as well in `PLUGINS` but using classes directly is more straight forward in most cases.
+
 
 There is a growing set of utility methods in ``wm.sampledata.utils`` (eg for
 handling portlets and files, or download images from http://lorempixel.com)

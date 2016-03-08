@@ -1,6 +1,13 @@
 Changelog
 #########
 
+dev
+===
+
+- Classes can be used to define plugin groups as well as utility names
+  [pcdummy]
+
+
 0.3 (2014-08-25)
 ================
 
