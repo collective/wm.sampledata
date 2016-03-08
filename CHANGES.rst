@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4 (unreleased)
+0.4 (2016-03-08)
 ----------------
 
 - Classes can be used to define plugin groups as well as utility names
