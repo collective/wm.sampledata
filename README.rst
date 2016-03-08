@@ -1,6 +1,5 @@
 .. contents::
 
-.. sectnum::
 
 Why use this?
 =============
