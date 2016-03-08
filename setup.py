@@ -1,13 +1,17 @@
 from setuptools import setup, find_packages
-import os
+
 
 version = '0.3'
+
+long_description = (
+    open("README.rst").read() + "\n\n" +
+    open("CHANGES.rst").read() + "\n"
+    )
 
 setup(name='wm.sampledata',
       version=version,
       description="UI and utility methods to generate sampledata for Plone projects",
-      long_description=open("README.rst").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.rst")).read(),
+      long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[

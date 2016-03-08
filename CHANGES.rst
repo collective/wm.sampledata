@@ -1,15 +1,15 @@
 Changelog
-#########
+=========
 
-dev
-===
+0.4 (unreleased)
+----------------
 
 - Classes can be used to define plugin groups as well as utility names
   [pcdummy]
 
 
 0.3 (2014-08-25)
-================
+----------------
 
 - utils.doWorkflowTransition uses plone_utils internally since
   portal_workflow.doActionFor does not set the effective date when publishing
@@ -30,7 +30,7 @@ dev
   on raptus.article)
 
 0.2.2 (2013-05-08)
-==================
+------------------
 
 - add traceback logging on errors [saily]
 
@@ -42,7 +42,7 @@ dev
   compatibility) [fRiSi]
 
 0.2.1 (2012-05-29)
-==================
+------------------
 
 - fix links for running plugins so they work for
   http://host/plonesite/@@sampledata, too. (not just http://host/@@sampledata)
@@ -52,12 +52,12 @@ dev
   folderish objects [fRiSi]
 
 0.2 (2011-12-02)
-================
+----------------
 
 - ``SampledataView.runPlugin`` returns the result of ``Plugin.generate``. This
   makes it easy to check if the plugin was sucessfully run in unittests.
 
 0.1 (2011-01-31)
-================
+----------------
 
 - Initial release

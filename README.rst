@@ -1,5 +1,7 @@
 .. contents::
 
+.. sectnum::
+
 Why use this?
 =============
 
@@ -17,7 +19,7 @@ all available sampledata plugins:
 
 http://localhost/plone/@@sampledata
 
-.. image:: http://svn.plone.org/svn/collective/wm.sampledata/trunk/docs/screenshot.png
+.. image:: https://raw.githubusercontent.com/collective/wm.sampledata/master/docs/screenshot.png
    :alt: Screenshot of the @@sampledata with enabled example plugin
 
 By default the view does not list any plugins.
@@ -179,7 +181,4 @@ eventually provide api to use fakenamegenerator.com for names
 Contribute
 ==========
 
-If you have any ideas for improvement or know another alternative to this package
-please `drop me a mail`_
-
-.. _`drop me a mail`: mailto:harald (at) webmeisterei dot com
+If you have any ideas for improvement or know another alternative to this package please `File a ticket <https://github.com/collective/wm.sampledata/issues>`_ or `drop me a mail <mailto:harald (at) webmeisterei dot com>`_
