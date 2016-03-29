@@ -63,7 +63,7 @@ def _download(url):
     return urllib2.urlopen(url)
 
 
-# http://lorempixel.com/
+# Loremflickr.com categories.
 CATEGORIES = [
     'abstract', 'animals', 'business',
     'cats', 'city', 'food', 'nightlife',
@@ -72,11 +72,40 @@ CATEGORIES = [
 ]
 
 
+def getFlickrImage(width=1024, height=768,
+                   keywords=[], match_all_keywords=False,
+                   gray=False):
+    """optains an image from loremflickr.com.
+
+    If you set match_all_keywords to true it will
+    search for all keywords (AND).
+
+    Set gray to True to get a grayscale image.
+    """
+
+    url = 'http://loremflickr.com/'
+    params = []
+
+    if gray:
+        params.append('g')
+
+    params.append('%d/%d' % (width, height))
+    params.append(','.join(keywords))
+    if match_all_keywords:
+        params.append('and')
+
+    url = url + '/'.join(params)
+
+    info = _download(url)
+    data = info.read()
+    return StringIO.StringIO(data)
+
+
 def getImage(width=1024, height=768, category=None,
              gray=False, index=None, text=None):
     """obtains an image from lorempixel.com
 
-    for possible categories see ``CATEGORIES``
+    for possible categories see ``CATEGORIES``.
     """
 
     url = 'http://lorempixel.com/'
@@ -100,6 +129,39 @@ def getImage(width=1024, height=768, category=None,
 
 
 RATIOS = [(16, 9), (4, 3)]
+
+
+def getRandomFlickrImage(long_edge=1024,
+                         keywords=[], match_all_keywords=False,
+                         gray=None, landscape=None, ratios=RATIOS):
+    """Returns a random image from loremflickr.com (portrait or landscape)
+    in one of the available RATIOS.
+
+    Set gray to True to force grayscale pictures and to False to force color
+    pictures.
+    """
+    ratio = random.choice(ratios)
+    ratio = float(ratio[0])/ratio[1]
+
+    if landscape is None:
+        landscape = random.choice([True, False])
+
+    if gray is None:
+        gray = random.choice([True, False])
+
+    if landscape:
+        width = long_edge
+        height = int(long_edge / ratio)
+    else:
+        height = long_edge
+        width = int(long_edge / ratio)
+
+    return getImage(
+        width, height,
+        keywords=keywords,
+        match_all_keywords=match_all_keywords,
+        gray=gray
+    )
 
 
 def getRandomImage(long_edge=1024, category=None, gray=None,

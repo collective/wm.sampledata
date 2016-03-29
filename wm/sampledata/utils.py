@@ -21,6 +21,17 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from zExceptions import BadRequest
 
+# API
+from wm.sampledata.images import getImage
+from wm.sampledata.images import getFlickrImage
+from wm.sampledata.images import getRandomImage
+from wm.sampledata.images import getRandomFlickrImage
+
+# Silence flake8
+assert getImage
+assert getFlickrImage
+assert getRandomImage
+assert getRandomFlickrImage
 
 IPSUM_LINE = "Lorem ipsum mel augue antiopam te. Invidunt constituto accommodare ius cu. Et cum solum liber doming, mel eu quem modus, sea probo putant ex."  # noqa
 
