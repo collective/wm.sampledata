@@ -1,13 +1,16 @@
+# -*- coding: utf-8 -*-
+import random
+import StringIO
 import time
 import urllib2
 from functools import wraps
-import StringIO
-import random
+
 from wm.sampledata import logger
+
+
 # see
 # http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/
 # http://stackoverflow.com/questions/9446387/how-to-retry-urllib2-request-when-failed
-
 def _retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
     """Retry calling the decorated function using an exponential backoff.
 
@@ -58,58 +61,64 @@ def _download(url):
     """
     logger.info('Downloading %s' % url)
     return urllib2.urlopen(url)
-    
-    
-    
-#http://lorempixel.com/
-CATEGORIES = ['abstract','animals','business','cats','city','food','nightlife',
-              'fashion','people','nature','sports','technics','transport',]
 
-    
-def getImage(width=1024, height=768, category=None, gray=False, index=None, text=None):
+
+# http://lorempixel.com/
+CATEGORIES = [
+    'abstract', 'animals', 'business',
+    'cats', 'city', 'food', 'nightlife',
+    'fashion', 'people', 'nature', 'sports',
+    'technics', 'transport',
+]
+
+
+def getImage(width=1024, height=768, category=None,
+             gray=False, index=None, text=None):
     """obtains an image from lorempixel.com
-    
+
     for possible categories see ``CATEGORIES``
     """
-    
+
     url = 'http://lorempixel.com/'
     params = []
-    
+
     if gray:
         params.append('g/')
     params.append('%d/%d/' % (width, height))
     if category:
         params.append(category + '/')
         if index:
-            params.append('%d/' % index)    
+            params.append('%d/' % index)
     if text:
         params.append('%s/' % text)
 
     url = url + ''.join(params)
-    
+
     info = _download(url)
-    data = info.read() 
+    data = info.read()
     return StringIO.StringIO(data)
 
 
-RATIOS = [(16,9), (4,3)]
+RATIOS = [(16, 9), (4, 3)]
 
-def getRandomImage(long_edge=1024, category=None, gray=None, landscape=None, ratios=RATIOS):
-    """returns a random image from lorempixel.com (portrait or landscape) in one of the available
-    RATIOS
-    
-    set gray to True to force grayscale pictures and to False to force color 
+
+def getRandomImage(long_edge=1024, category=None, gray=None,
+                   landscape=None, ratios=RATIOS):
+    """returns a random image from lorempixel.com (portrait or landscape)
+    in one of the available RATIOS
+
+    set gray to True to force grayscale pictures and to False to force color
     pictures
     """
     ratio = random.choice(ratios)
     ratio = float(ratio[0])/ratio[1]
-    
+
     if landscape is None:
         landscape = random.choice([True, False])
-        
+
     if gray is None:
         gray = random.choice([True, False])
-        
+
     if landscape:
         width = long_edge
         height = int(long_edge / ratio)
