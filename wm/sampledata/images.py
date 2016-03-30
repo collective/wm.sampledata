@@ -63,7 +63,7 @@ def _download(url):
     return urllib2.urlopen(url)
 
 
-# Loremflickr.com categories.
+# Lorempixel.com categories.
 CATEGORIES = [
     'abstract', 'animals', 'business',
     'cats', 'city', 'food', 'nightlife',
@@ -92,7 +92,7 @@ def getFlickrImage(width=1024, height=768,
     params.append('%d/%d' % (width, height))
     params.append(','.join(keywords))
     if match_all_keywords:
-        params.append('and')
+        params.append('all')
 
     url = url + '/'.join(params)
 
@@ -141,7 +141,7 @@ def getRandomFlickrImage(long_edge=1024,
     pictures.
     """
     ratio = random.choice(ratios)
-    ratio = float(ratio[0])/ratio[1]
+    ratio = float(ratio[0]) / ratio[1]
 
     if landscape is None:
         landscape = random.choice([True, False])
@@ -156,7 +156,7 @@ def getRandomFlickrImage(long_edge=1024,
         height = long_edge
         width = int(long_edge / ratio)
 
-    return getImage(
+    return getFlickrImage(
         width, height,
         keywords=keywords,
         match_all_keywords=match_all_keywords,
@@ -173,7 +173,7 @@ def getRandomImage(long_edge=1024, category=None, gray=None,
     pictures
     """
     ratio = random.choice(ratios)
-    ratio = float(ratio[0])/ratio[1]
+    ratio = float(ratio[0]) / ratio[1]
 
     if landscape is None:
         landscape = random.choice([True, False])

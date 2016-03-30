@@ -4,8 +4,8 @@ Changelog
 0.5 (unreleased)
 ----------------
 
-- Add functions to use loremflickr.com to optain sample data.
-  [pcdummy]
+- `util.getFlickrImage` and `utils.getRandomFlickrImage` allow to obtain images from loremflickr.com.
+  [pcdummy, fRiSi]
 
 
 0.4 (2016-03-08)
