@@ -4,7 +4,8 @@ Changelog
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add functions to use loremflickr.com to optain sample data.
+  [pcdummy]
 
 
 0.4 (2016-03-08)

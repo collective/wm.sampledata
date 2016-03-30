@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-from zope.interface.declarations import implements
-from wm.sampledata.interfaces import ISampleDataPlugin
-from zope.component import getUtility
 import logging
+
+from zope.component import getUtility
+from zope.interface.declarations import implements
+
+from wm.sampledata.interfaces import ISampleDataPlugin
+
 
 logger = logging.getLogger('wm.sampledata')
 
