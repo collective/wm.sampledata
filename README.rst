@@ -25,9 +25,11 @@ By default the view does not list any plugins.
 The screen above shows the example plugin activated via ``<include package="wm.sampledata.example" />``.
 
 
-Writing and registering your custom sampledata plugin is very easy::
+Writing and registering your custom sampledata plugin is very easy:
 
-	from wm.sampledata import utils
+.. code-block:: python
+
+    from wm.sampledata import utils
 
     class MyPlugin(object):
         implements(ISampleDataPlugin)
@@ -41,9 +43,15 @@ Writing and registering your custom sampledata plugin is very easy::
 
             utils.createImage(context, 'random-nature.jpg',
                         file = utils.getRandomImage(category='nature', gray=False),
-                    	title=u"Random Image",
-                    	description=u"Downloaded from lorempixel.com")
+                        title=u"Random Image",
+                        description=u"Downloaded from lorempixel.com")
 
+            utils.createImage(context, 'random-sportscar.jpg',
+                        file = utils.getRandomFlickrImage(keywords=['car','sport'],
+                                                          match_all_keywords=True,
+                                                          gray=False),
+                        title=u"Random Flickr Image",
+                        description=u"Downloaded from loremflickr.com")
 
     myPlugin = MyPlugin()
     component.provideUtility(myPlugin,
@@ -57,7 +65,9 @@ for a complete example of a custom plugin.
 
 
 
-You can also group plugins (and even other plugin-gropus) so users need to run only one plugin to setup their sampledata correctly::
+You can also group plugins (and even other plugin-gropus) so users need to run only one plugin to setup their sampledata correctly.
+
+.. code-block:: python
 
     from wm.sampledata import PluginGroup
 
@@ -123,7 +133,7 @@ z3c.sampledata
     Seems to provide very similar utility methods.
     No pluggable Generators, No User-Interface
 
-	.. _`zopyx.ipsumplone`: https://pypi.python.org/pypi/zopyx.ipsumplone/
+    .. _`zopyx.ipsumplone`: https://pypi.python.org/pypi/zopyx.ipsumplone/
 
 
 `ely.contentgenerator`_
@@ -138,18 +148,18 @@ collective.contentgenerator
 
 
 `collective.lorem`_
-	content action to fill content with lorem-ipsum text and provides `utility methods
-	<http://svn.plone.org/svn/collective/collective.lorem/trunk/collective/lorem/generation.txt>`_
-	`createStandardContent` to create random content (news, documents, files, image)
-	and `createNestedStructure` to create arbitrary nested folder structures.
+    content action to fill content with lorem-ipsum text and provides `utility methods
+    <http://svn.plone.org/svn/collective/collective.lorem/trunk/collective/lorem/generation.txt>`_
+    `createStandardContent` to create random content (news, documents, files, image)
+    and `createNestedStructure` to create arbitrary nested folder structures.
 
-	.. _`collective.lorem`: http://pypi.python.org/pypi/collective.lorem/
+    .. _`collective.lorem`: http://pypi.python.org/pypi/collective.lorem/
 
 
 `collective.loremipsum`_
-	Allows to create members (names taken from fakenamegenerator.com)
+    Allows to create members (names taken from fakenamegenerator.com)
 
-	.. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum
+    .. _`collective.loremipsum`: https://github.com/collective/collective.loremipsum
 
 
 `zettwerk.setup`_
