@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 (unreleased)
+0.5 (2016-03-31)
 ----------------
 
 - `util.getFlickrImage` and `utils.getRandomFlickrImage` allow to obtain images from loremflickr.com.
