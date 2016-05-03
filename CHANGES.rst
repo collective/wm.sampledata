@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.6 (unreleased)
+0.5.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add a user-agent to the image downloader.
+  [pcdummy]
 
 
 0.5 (2016-03-31)
