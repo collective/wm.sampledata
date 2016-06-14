@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5.2 (unreleased)
+0.5.2 (2016-06-14)
 ------------------
 
 - Fix the user agent switcher to be compatible with Mac/Windows.
