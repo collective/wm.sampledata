@@ -4,7 +4,8 @@ Changelog
 0.5.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix the user agent switcher to be compatible with Mac/Windows.
+  [pcdummy]
 
 
 0.5.1 (2016-05-03)

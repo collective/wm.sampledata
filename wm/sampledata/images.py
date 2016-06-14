@@ -60,10 +60,10 @@ def _download(url):
     first delay 2 seconds, second 4, third 8, etc
     """
     logger.info('Downloading %s' % url)
-    opener = urllib2.build_opener()
-    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-    return opener.open(url)
 
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0'}  # noqa
+    req = urllib2.Request(url, None, headers)
+    return urllib2.urlopen(req)
 
 # Lorempixel.com categories.
 CATEGORIES = [
