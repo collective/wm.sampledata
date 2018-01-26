@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import random
-import StringIO
-import time
-import urllib2
 from functools import wraps
-
 from wm.sampledata import logger
+
+import StringIO
+import random
+import time
+import urllib
+import urllib2
 
 
 # see
@@ -74,10 +75,35 @@ CATEGORIES = [
 ]
 
 
+def get_placeholder_image(width=1024, height=768,
+                          text='',  # default to dimensions of image
+                          bkg_color='CCCCCC',
+                          text_color='969696'):
+    """see https://placeholder.com/ for explanations
+    """
+
+    url = u'http://via.placeholder.com/{w}x{h}/{bkg}/{textcolor}'.format(
+        w=width,
+        h=height,
+        bkg=bkg_color,
+        textcolor=text_color)
+
+    params = {}
+    if text:
+        params['text'] = text.encode('utf-8')
+
+    if params:
+        url += '?' + urllib.urlencode(params)
+
+    info = _download(url)
+    data = info.read()
+    return StringIO.StringIO(data)
+
+
 def getFlickrImage(width=1024, height=768,
                    keywords=[], match_all_keywords=False,
                    gray=False):
-    """optains an image from loremflickr.com.
+    """obtains an image from loremflickr.com.
 
     If you set match_all_keywords to true it will
     search for all keywords (AND).

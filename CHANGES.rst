@@ -4,7 +4,9 @@ Changelog
 0.5.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- `utils.get_placeholder_image` allows to obtain images from
+  https://placeholder.com/
+  [fRiSi]
 
 
 0.5.2 (2016-06-14)
