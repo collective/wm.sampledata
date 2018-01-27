@@ -85,8 +85,8 @@ def get_placeholder_image(width=1024, height=768,
     url = u'http://via.placeholder.com/{w}x{h}/{bkg}/{textcolor}'.format(
         w=width,
         h=height,
-        bkg=bkg_color,
-        textcolor=text_color)
+        bkg=bkg_color.strip('#'),
+        textcolor=text_color.strip('#'))
 
     params = {}
     if text:
