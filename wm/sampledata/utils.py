@@ -79,7 +79,7 @@ def todayPlusDays(nrDays=0, zopeDateTime=False):
     today = datetime.date.today()
     date = today + datetime.timedelta(days=nrDays)
     if zopeDateTime:
-        return DateTime(date.isoformat())
+        return DateTime(date.year, date.month, date.day)
     else:
         return date
 
