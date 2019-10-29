@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.6.1 (unreleased)
+------------------
+
+- use pypi compatible email-address in setup.py
+
 0.6.0 (2019-10-29)
 ------------------
 
