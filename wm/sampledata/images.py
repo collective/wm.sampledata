@@ -6,7 +6,7 @@ import StringIO
 import random
 import time
 import urllib
-import urllib2
+import requests
 
 
 # see
@@ -55,16 +55,15 @@ def _retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
     return deco_retry
 
 
-@_retry(urllib2.URLError, tries=5, delay=2, logger=logger)
+@_retry(requests.RequestException, tries=5, delay=2, logger=logger)
 def _download(url):
     """try to download the url 5 times, with exponential delay.
     first delay 2 seconds, second 4, third 8, etc
     """
     logger.info('Downloading %s' % url)
-
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0'}  # noqa
-    req = urllib2.Request(url, None, headers)
-    return urllib2.urlopen(req)
+    return requests.get(url, headers=headers).content
+
 
 # Lorempixel.com categories.
 CATEGORIES = [
@@ -95,9 +94,7 @@ def get_placeholder_image(width=1024, height=768,
     if params:
         url += '?' + urllib.urlencode(params)
 
-    info = _download(url)
-    data = info.read()
-    return StringIO.StringIO(data)
+    return _download(url)
 
 
 def getFlickrImage(width=1024, height=768,
@@ -124,9 +121,7 @@ def getFlickrImage(width=1024, height=768,
 
     url = url + '/'.join(params)
 
-    info = _download(url)
-    data = info.read()
-    return StringIO.StringIO(data)
+    return _download(url)
 
 
 def getImage(width=1024, height=768, category=None,
@@ -151,9 +146,7 @@ def getImage(width=1024, height=768, category=None,
 
     url = url + ''.join(params)
 
-    info = _download(url)
-    data = info.read()
-    return StringIO.StringIO(data)
+    return _download(url)
 
 
 RATIOS = [(16, 9), (4, 3)]

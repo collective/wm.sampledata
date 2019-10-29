@@ -4,6 +4,10 @@ Changelog
 0.5.3 (unreleased)
 ------------------
 
+- use python-requests for downloading images
+
+- breaking: return image data as string (no StringIO buffers)
+
 - `utils.get_placeholder_image` allows to obtain images from
   https://placeholder.com/
   [fRiSi]
