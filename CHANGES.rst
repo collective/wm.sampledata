@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5.3 (unreleased)
+0.6.0 (2019-10-29)
 ------------------
 
 - use python-requests for downloading images
