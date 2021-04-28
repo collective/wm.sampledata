@@ -4,7 +4,8 @@ Changelog
 0.6.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- setting env variable CI=true allows to disable image download
+  (useful for running tests that generate sampledata)
 
 
 0.6.1 (2019-10-29)

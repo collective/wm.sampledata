@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 from wm.sampledata import logger
+from PIL import Image
+from io import BytesIO
 
-import StringIO
+
+import os
 import random
 import time
 import urllib
 import requests
+
 
 
 # see
@@ -97,6 +101,31 @@ def get_placeholder_image(width=1024, height=768,
     return _download(url)
 
 
+def test_stub(f):
+    """Checks for environment variable "CI=true" and return a  grey jpeg
+    generated with pil instead with dimensions width and height
+    """
+
+    @wraps(f)
+    def f_stub(*args, **kwargs):
+        width = 1024
+        height = 768
+        if len(args) >= 2:
+            width, height = args[:2]
+        ci = os.environ.get('CI', '0')
+        if ci.lower() in ['1', 'true', 'yes', True]:
+            logger.info("CI=true set, do not download image")
+            img = Image.new("RGB", (width, height), '#bababa')
+            with BytesIO() as buffer:
+                img.save(buffer, 'JPEG')
+                buffer.seek(0)
+                return buffer.read()
+        return f(*args, **kwargs)
+
+    return f_stub  # true decorator
+
+
+@test_stub
 def getFlickrImage(width=1024, height=768,
                    keywords=[], match_all_keywords=False,
                    gray=False):
@@ -124,6 +153,7 @@ def getFlickrImage(width=1024, height=768,
     return _download(url)
 
 
+@test_stub
 def getImage(width=1024, height=768, category=None,
              gray=False, index=None, text=None):
     """obtains an image from lorempixel.com
