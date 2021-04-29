@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.6.2 (unreleased)
+0.7.0 (2021-04-29)
 ------------------
 
 - setting env variable CI=true allows to disable image download
