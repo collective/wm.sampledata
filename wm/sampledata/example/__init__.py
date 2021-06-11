@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.portlet.static.static import Assignment as StaticAssignment
-from zope.interface.declarations import implements
+from zope.interface import implementer
 
 from wm.sampledata.interfaces import ISampleDataPlugin
 from wm.sampledata.utils import addPortlet
@@ -13,8 +13,8 @@ from wm.sampledata.utils import getRandomImage
 from wm.sampledata.utils import IPSUM_PARAGRAPH
 
 
+@implementer(ISampleDataPlugin)
 class DemoContent(object):
-    implements(ISampleDataPlugin)
 
     title = "Demo Content"
 

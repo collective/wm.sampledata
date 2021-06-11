@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-import logging
-
-from zope.component import getUtility
-from zope.interface.declarations import implements
-
 from wm.sampledata.interfaces import ISampleDataPlugin
+from zope.component import getUtility
+from zope.interface import implementer
+
+import logging
 
 
 logger = logging.getLogger('wm.sampledata')
 
 
+@implementer(ISampleDataPlugin)
 class PluginGroup(object):
     """useful baseclass for grouping plugins by their name
     """
-
-    implements(ISampleDataPlugin)
 
     PLUGINS = []
 

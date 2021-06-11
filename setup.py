@@ -16,11 +16,9 @@ setup(name='wm.sampledata',
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only"
         'Framework :: Plone',
-        'Framework :: Plone :: 4.1',
-        'Framework :: Plone :: 4.2',
-        'Framework :: Plone :: 4.3',
+        'Framework :: Plone :: 5.2',
         ],
       keywords='plone sampledata generation',
       author='Harald Friessnegger',

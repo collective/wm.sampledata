@@ -32,12 +32,4 @@ def test_suite():
     s = unittest.TestSuite()
     s.addTest(unittest.makeSuite(FileUtilities))
     return s
-#
-# def main():
-#    unittest.TextTestRunner().run(test_suite())
-#
-# if __name__=='__main__':
-#    if len(sys.argv) > 1:
-#        globals()[sys.argv[1]]()
-#    else:
-#        main()
+

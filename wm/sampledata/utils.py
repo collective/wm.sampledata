@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 import os
-from types import ListType
 
 from plone.portlets.constants import CONTENT_TYPE_CATEGORY
 from plone.portlets.constants import CONTEXT_CATEGORY
@@ -11,12 +10,11 @@ from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
 from zope import event
-from zope.component._api import getMultiAdapter
-from zope.component._api import getUtility
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.container.interfaces import INameChooser
 
 from DateTime.DateTime import DateTime
-from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from zExceptions import BadRequest
@@ -29,6 +27,8 @@ from wm.sampledata.images import getRandomFlickrImage
 from wm.sampledata.images import get_placeholder_image
 
 # Silence flake8
+from zope.lifecycleevent import ObjectCreatedEvent
+
 assert getImage
 assert getFlickrImage
 assert getRandomImage
@@ -53,7 +53,7 @@ def getFile(module, *path):
     if type(path) == str:
         path = [path]
     filePath = os.path.join(modPath, *path)
-    return file(filePath)
+    return open(filePath, 'rb')
 
 
 def getFileContent(module, *path):
@@ -85,11 +85,11 @@ def todayPlusDays(nrDays=0, zopeDateTime=False):
 
 
 def eventAndReindex(*objects):
-    """fires an objectinitialized event and
+    """fires an ObjectCreatedEvent event and
     reindexes the object(s) after creation so it can be found in the catalog
     """
     for obj in objects:
-        event.notify(ObjectInitializedEvent(obj))
+        event.notify(ObjectCreatedEvent(obj))
         obj.reindexObject()
 
 
@@ -235,7 +235,7 @@ def doWorkflowTransitions(objects=[], transition='publish',
 
     if not objects:
         return
-    if type(objects) != ListType:
+    if type(objects) != list:
         objects = [objects, ]
 
     utils = getToolByName(objects[0], 'plone_utils')
