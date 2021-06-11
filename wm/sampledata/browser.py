@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from operator import itemgetter
+from plone import api
+from plone.protect.utils import addTokenToUrl
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
 from wm.sampledata import logger
@@ -13,9 +15,19 @@ class SampleDataView(BrowserView):
     def listPlugins(self):
         """list all available plugins sorted by their name"""
         plugins = []
+
+        base_url = api.content.get_view(
+            "plone_context_state", self.context, self.request
+        ).current_base_url()
+
         for name, util in getUtilitiesFor(ISampleDataPlugin):
             plugins.append(
-                dict(name=name, title=util.title, description=util.description)
+                dict(
+                    name=name,
+                    title=util.title,
+                    description=util.description,
+                    url=addTokenToUrl(f"{base_url}/run?plugin={name}"),
+                )
             )
 
         return sorted(plugins, key=itemgetter("name"))
@@ -25,6 +37,7 @@ class SampleDataView(BrowserView):
         show a status message that tells the user if the plugin
         could not be found, raised an error or ran successfully.
         """
+
         result = None
         try:
             plugin = getUtility(ISampleDataPlugin, name=plugin)
