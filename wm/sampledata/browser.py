@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from operator import itemgetter
-
-from zope.component import getUtilitiesFor
-from zope.component import getUtility
-from zope.component.interfaces import ComponentLookupError
-
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
 from wm.sampledata import logger
 from wm.sampledata.interfaces import ISampleDataPlugin
+from zope.component import getUtilitiesFor
+from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
 
 
 class SampleDataView(BrowserView):

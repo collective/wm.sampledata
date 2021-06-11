@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
-from wm.sampledata import logger
-from PIL import Image
 from io import BytesIO
-
+from PIL import Image
+from wm.sampledata import logger
 
 import os
 import random
-import time
-import urllib.request, urllib.parse, urllib.error
 import requests
-
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
 
 
 # see

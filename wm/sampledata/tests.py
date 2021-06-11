@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+from plone import api
+from plone.app.testing import login
+from plone.app.testing import SITE_OWNER_NAME
+from Products.statusmessages.interfaces import IStatusMessage
+from wm.sampledata import example
+from wm.sampledata.testing import WM_SAMPLEDATA_INTEGRATION_TESTING
+from wm.sampledata.utils import getFileContent
+
 import os
 import unittest
-
 import wm.sampledata.tests
-from Products.statusmessages.interfaces import IStatusMessage
-from plone.app.testing import SITE_OWNER_NAME, login
-from wm.sampledata import example
-from wm.sampledata.utils import getFileContent
-from wm.sampledata.testing import WM_SAMPLEDATA_INTEGRATION_TESTING
-
-from plone import api
 
 
 class FileUtilities(unittest.TestCase):

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
-import os
-
+from DateTime.DateTime import DateTime
 from plone import api
 from plone import namedfile
 from plone.portlets.constants import CONTENT_TYPE_CATEGORY
@@ -11,23 +9,24 @@ from plone.portlets.interfaces import ILocalPortletAssignmentManager
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
+# API
+from wm.sampledata.images import get_placeholder_image
+from wm.sampledata.images import getFlickrImage
+from wm.sampledata.images import getImage
+from wm.sampledata.images import getRandomFlickrImage
+from wm.sampledata.images import getRandomImage
+from zExceptions import BadRequest
 from zope import event
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.container.interfaces import INameChooser
 from zope.lifecycleevent import ObjectCreatedEvent
 
-from DateTime.DateTime import DateTime
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
-from zExceptions import BadRequest
+import datetime
+import os
 
-# API
-from wm.sampledata.images import getImage
-from wm.sampledata.images import getFlickrImage
-from wm.sampledata.images import getRandomImage
-from wm.sampledata.images import getRandomFlickrImage
-from wm.sampledata.images import get_placeholder_image
 
 # Silence flake8
 assert getImage

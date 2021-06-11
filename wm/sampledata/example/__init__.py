@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone.app.textfield import RichTextValue
 from plone.portlet.static.static import Assignment as StaticAssignment
-from zope.interface import implementer
-
 from wm.sampledata.interfaces import ISampleDataPlugin
 from wm.sampledata.utils import addPortlet
 from wm.sampledata.utils import createImage
@@ -12,8 +11,7 @@ from wm.sampledata.utils import eventAndReindex
 from wm.sampledata.utils import getFileContent
 from wm.sampledata.utils import getRandomImage
 from wm.sampledata.utils import IPSUM_PARAGRAPH
-
-from plone import api
+from zope.interface import implementer
 
 
 @implementer(ISampleDataPlugin)
