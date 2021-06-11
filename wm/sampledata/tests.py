@@ -4,6 +4,7 @@ from plone.app.testing import login
 from plone.app.testing import SITE_OWNER_NAME
 from Products.statusmessages.interfaces import IStatusMessage
 from wm.sampledata import example
+from wm.sampledata import utils
 from wm.sampledata.testing import WM_SAMPLEDATA_INTEGRATION_TESTING
 from wm.sampledata.utils import getFileContent
 
@@ -66,8 +67,30 @@ class TestView(unittest.TestCase):
         self.assertEqual("published", brains[0].review_state, "document got published")
 
 
+
+class TestUtils(unittest.TestCase):
+    """Test sampledata utility methods"""
+
+    layer = WM_SAMPLEDATA_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
+        # login as manager user
+        login(self.layer["app"], SITE_OWNER_NAME)
+
+    def test_create_file(self):
+        DATA = b"some file text data"
+        file = utils.createFile(self.portal, "great-file.txt", DATA, title="What a great file")
+
+        self.assertEqual("great-file.txt", file.id, "keyword args are respected")
+        self.assertIsNotNone(file.file, "file has been set")
+        self.assertEqual(file.file.data, DATA, "data has been written to file")
+
+
 def test_suite():
     s = unittest.TestSuite()
     s.addTest(unittest.makeSuite(FileUtilities))
     s.addTest(unittest.makeSuite(TestView))
+    s.addTest(unittest.makeSuite(TestUtils))
     return s

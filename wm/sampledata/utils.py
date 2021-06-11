@@ -11,8 +11,6 @@ from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
-
-# API
 from wm.sampledata.images import get_placeholder_image
 from wm.sampledata.images import getFlickrImage
 from wm.sampledata.images import getImage
@@ -93,28 +91,6 @@ def eventAndReindex(*objects):
         obj.reindexObject()
 
 
-def workflowAds(home, wfdefs):
-    """
-    do workflow transitions and set enddate to datetime if set.
-
-    sample format
-    wfdefs = [('plone-dev', ['publish'], None),
-              ('minimal-job', ['submit'], datetime),
-              ('plone-dev', ['publish']),
-              ]
-    """
-
-    wft = getToolByName(home, "portal_workflow")
-
-    for id, actions, date in wfdefs:
-        ad = home.unrestrictedTraverse(id)
-        for action in actions:
-            wft.doActionFor(ad, action)
-        if date:
-            ad.expirationDate = date
-        ad.reindexObject(idxs=["end", "review_state"])
-
-
 def addPortlet(context, columnName="plone.leftcolumn", assignment=None):
     if not assignment:
         return
@@ -176,18 +152,17 @@ def setPortletWeight(portlet, weight):
         pass
 
 
-def createImage(context, id, file_data, title="", description=""):
+def createImage(context, id, file_data, **kwargs):
     """create an image and return the object"""
-    img = api.content.create(context, "Image", id, title=title, description=description)
-    # FIXME: filename
-    img.image = namedfile.NamedBlobImage(file_data, filename="fooXXX")
+    img = api.content.create(context, "Image", id, **kwargs)
+    img.image = namedfile.NamedBlobImage(file_data)
     return img
 
 
-def createFile(context, id, file, title="", description=""):
-    context.invokeFactory("File", id, title=title, description=description)
-    context[id].setFile(file)
-    return context[id]
+def createFile(context, id, file_data, **kwargs):
+    file = api.content.create(context, "File", id, **kwargs)
+    file.file = namedfile.NamedBlobFile(file_data)
+    return file
 
 
 def excludeFromNavigation(obj, exclude=True):
@@ -195,20 +170,10 @@ def excludeFromNavigation(obj, exclude=True):
     make sure to reindex the object afterwards to make the
     navigation portlet notice the change
     """
-
-    obj._md["excludeFromNav"] = exclude
-
-
-def getRelativePortalPath(context):
-    """return the path of the plonesite"""
-    url = getToolByName(context, "portal_url")
-    return url.getPortalPath()
-
-
-def getRelativeContentPath(obj):
-    """return the path of the object"""
-    url = getToolByName(obj, "portal_url")
-    return "/".join(url.getRelativeContentPath(obj))
+    # XXX needs to be revised for plone5
+    # plone4 way
+    # obj._md["excludeFromNav"] = exclude
+    obj.exclude_from_nav = exclude
 
 
 def doWorkflowTransition(obj, transition):
@@ -242,6 +207,7 @@ def doWorkflowTransitions(objects=[], transition="publish", includeChildren=Fals
         )
 
 
+# XXX needs to be revised for plone5
 def constrainTypes(obj, allowed=[], notImmediate=[]):
     """sets allowed and immediately addable types for obj.
 
@@ -264,20 +230,3 @@ def constrainTypes(obj, allowed=[], notImmediate=[]):
         immediate = allowed
     obj.setImmediatelyAddableTypes(immediate)
 
-
-def raptus_hide_for(item, component):
-    """hide the specified item in the `raptus.article` component given by it's name
-    (eg. ``(item=<Image>, component='imageslider.teaser')`` )
-    """
-    components = list(item.Schema()["components"].get(item))
-    item.Schema()["components"].set(item, [c for c in components if not c == component])
-    item.reindexObject()
-
-
-def raptus_show_for(item, component):
-    """show the specified item in the `raptus.article` component given by it's name
-    (eg. ``(item=<Image>, component='imageslider.teaser')`` )
-    """
-    components = list(item.Schema()["components"].get(item))
-    item.Schema()["components"].set(item, [c for c in components if not c == component])
-    item.reindexObject()
