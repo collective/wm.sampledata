@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from plone.app.textfield import RichTextValue
 from plone.portlet.static.static import Assignment as StaticAssignment
 from zope.interface import implementer
 
@@ -11,6 +12,8 @@ from wm.sampledata.utils import eventAndReindex
 from wm.sampledata.utils import getFileContent
 from wm.sampledata.utils import getRandomImage
 from wm.sampledata.utils import IPSUM_PARAGRAPH
+
+from plone import api
 
 
 @implementer(ISampleDataPlugin)
@@ -26,24 +29,24 @@ that displays contact information."""
 
         # delete sample document if it exists
         deleteItems(context, pageId)
-
-        context.invokeFactory('Document', id=pageId, title="Sample Document")
-        page = context[pageId]
+        site = api.portal.get()
+        page = api.content.create(site, "Document", pageId, title="Sample Document")
 
         # download image from lorempixel.com - force colour images from
         # category nature
         imageId = 'sampleImage'
         deleteItems(context, imageId)
-        createImage(context, imageId, +
+        createImage(context, imageId,
                     getRandomImage(category='nature', gray=False),
                     title="Random Image",
                     description="Downloaded from lorempixel.com")
 
-        text = '<img class="image-right" src="%s/@@images/image/mini" />' % (
-            imageId) + IPSUM_PARAGRAPH
+        text = f"""<img class="image-right" src="{imageId}/@@images/image/mini" />
+        <p>And now to something completely different:</p>
+        """ + IPSUM_PARAGRAPH
 
         # mimetype makes tiny recognize the text as HTML
-        page.setText(text, mimetype='text/html')
+        page.text = RichTextValue(text, "text/html", "text/html")
 
         # publish and reindex (needed to make it show up in the navigation) the
         # page
@@ -54,3 +57,5 @@ that displays contact information."""
         portlet = StaticAssignment(
             "Contact", getFileContent(myModule, 'portlet.html'))
         addPortlet(page, 'plone.leftcolumn', portlet)
+
+        return "successfully ran democontent plugin"

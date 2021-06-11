@@ -2,6 +2,8 @@
 import datetime
 import os
 
+from plone import api
+from plone import namedfile
 from plone.portlets.constants import CONTENT_TYPE_CATEGORY
 from plone.portlets.constants import CONTEXT_CATEGORY
 from plone.portlets.constants import GROUP_CATEGORY
@@ -13,6 +15,7 @@ from zope import event
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.container.interfaces import INameChooser
+from zope.lifecycleevent import ObjectCreatedEvent
 
 from DateTime.DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
@@ -27,8 +30,6 @@ from wm.sampledata.images import getRandomFlickrImage
 from wm.sampledata.images import get_placeholder_image
 
 # Silence flake8
-from zope.lifecycleevent import ObjectCreatedEvent
-
 assert getImage
 assert getFlickrImage
 assert getRandomImage
@@ -179,13 +180,13 @@ def setPortletWeight(portlet, weight):
         pass
 
 
-def createImage(context, id, file, title='', description=''):
+def createImage(context, id, file_data, title='', description=''):
     """create an image and return the object
     """
-    context.invokeFactory('Image', id, title=title,
-                          description=description)
-    context[id].setImage(file)
-    return context[id]
+    img = api.content.create(context, "Image", id, title=title, description=description)
+    # FIXME: filename
+    img.image = namedfile.NamedBlobImage(file_data, filename="fooXXX")
+    return img
 
 
 def createFile(context, id, file, title='', description=''):
