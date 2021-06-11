@@ -10,17 +10,15 @@ from zope.component.interfaces import ComponentLookupError
 
 
 class SampleDataView(BrowserView):
-
     def listPlugins(self):
-        """list all available plugins sorted by their name
-        """
+        """list all available plugins sorted by their name"""
         plugins = []
         for name, util in getUtilitiesFor(ISampleDataPlugin):
-            plugins.append(dict(name=name,
-                                title=util.title,
-                                description=util.description))
+            plugins.append(
+                dict(name=name, title=util.title, description=util.description)
+            )
 
-        return sorted(plugins, key=itemgetter('name'))
+        return sorted(plugins, key=itemgetter("name"))
 
     def runPlugin(self, plugin, debug=False):
         """run a named plugin and redirect to the sampledata page again.
@@ -32,20 +30,27 @@ class SampleDataView(BrowserView):
             plugin = getUtility(ISampleDataPlugin, name=plugin)
             result = plugin.generate(self.context)
             IStatusMessage(self.request).addStatusMessage(
-                "successfully ran %s" % plugin.title, 'info')
+                "successfully ran %s" % plugin.title, "info"
+            )
         except ComponentLookupError as e:
             IStatusMessage(self.request).addStatusMessage(
-                "could not find plugin %s" % plugin, 'error')
+                "could not find plugin %s" % plugin, "error"
+            )
             logger.exception("could not find plugin %s" % plugin)
 
             if debug:
                 raise e
         except Exception as e:
             IStatusMessage(self.request).addStatusMessage(
-                "error running %s: %s" % (plugin.title, str(e)), 'error')
+                "error running %s: %s" % (plugin.title, str(e)), "error"
+            )
             logger.exception(
-                ("error running %s - try @@sampledata/run?"
-                 "plugin=<plugin-name>&debug=True") % (plugin.title))
+                (
+                    "error running %s - try @@sampledata/run?"
+                    "plugin=<plugin-name>&debug=True"
+                )
+                % (plugin.title)
+            )
 
             if debug:
                 raise e
@@ -53,5 +58,6 @@ class SampleDataView(BrowserView):
             if not debug:
                 # return to listing
                 self.request.response.redirect(
-                    self.context.absolute_url() + '/@@' + self.__name__)
+                    self.context.absolute_url() + "/@@" + self.__name__
+                )
                 return result

@@ -23,7 +23,7 @@ class DemoContent(object):
 that displays contact information."""
 
     def generate(self, context):
-        pageId = 'sample'
+        pageId = "sample"
 
         # delete sample document if it exists
         deleteItems(context, pageId)
@@ -32,16 +32,22 @@ that displays contact information."""
 
         # download image from lorempixel.com - force colour images from
         # category nature
-        imageId = 'sampleImage'
+        imageId = "sampleImage"
         deleteItems(context, imageId)
-        createImage(context, imageId,
-                    getRandomImage(category='nature', gray=False),
-                    title="Random Image",
-                    description="Downloaded from lorempixel.com")
+        createImage(
+            context,
+            imageId,
+            getRandomImage(category="nature", gray=False),
+            title="Random Image",
+            description="Downloaded from lorempixel.com",
+        )
 
-        text = f"""<img class="image-right" src="{imageId}/@@images/image/mini" />
+        text = (
+            f"""<img class="image-right" src="{imageId}/@@images/image/mini" />
         <p>And now to something completely different:</p>
-        """ + IPSUM_PARAGRAPH
+        """
+            + IPSUM_PARAGRAPH
+        )
 
         # mimetype makes tiny recognize the text as HTML
         page.text = RichTextValue(text, "text/html", "text/html")
@@ -52,8 +58,8 @@ that displays contact information."""
         eventAndReindex(page)
 
         import wm.sampledata.example as myModule
-        portlet = StaticAssignment(
-            "Contact", getFileContent(myModule, 'portlet.html'))
-        addPortlet(page, 'plone.leftcolumn', portlet)
+
+        portlet = StaticAssignment("Contact", getFileContent(myModule, "portlet.html"))
+        addPortlet(page, "plone.leftcolumn", portlet)
 
         return "successfully ran democontent plugin"

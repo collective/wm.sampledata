@@ -11,6 +11,7 @@ from plone.portlets.interfaces import IPortletAssignmentSettings
 from plone.portlets.interfaces import IPortletManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
+
 # API
 from wm.sampledata.images import get_placeholder_image
 from wm.sampledata.images import getFlickrImage
@@ -46,14 +47,14 @@ def getFile(module, *path):
     if module is None, treat path as absolut path
     path can be ['directories','and','file.txt'] or just 'file.txt'
     """
-    modPath = ''
+    modPath = ""
     if module:
         modPath = os.path.dirname(module.__file__)
 
     if type(path) == str:
         path = [path]
     filePath = os.path.join(modPath, *path)
-    return open(filePath, 'rb')
+    return open(filePath, "rb")
 
 
 def getFileContent(module, *path):
@@ -64,8 +65,7 @@ def getFileContent(module, *path):
 
 
 def deleteItems(folder, *ids):
-    """delete items in a folder and don't complain if they do not exist.
-    """
+    """delete items in a folder and don't complain if they do not exist."""
     for itemId in ids:
         try:
             folder.manage_delObjects([itemId])
@@ -104,7 +104,7 @@ def workflowAds(home, wfdefs):
               ]
     """
 
-    wft = getToolByName(home, 'portal_workflow')
+    wft = getToolByName(home, "portal_workflow")
 
     for id, actions, date in wfdefs:
         ad = home.unrestrictedTraverse(id)
@@ -112,10 +112,10 @@ def workflowAds(home, wfdefs):
             wft.doActionFor(ad, action)
         if date:
             ad.expirationDate = date
-        ad.reindexObject(idxs=['end', 'review_state'])
+        ad.reindexObject(idxs=["end", "review_state"])
 
 
-def addPortlet(context, columnName='plone.leftcolumn', assignment=None):
+def addPortlet(context, columnName="plone.leftcolumn", assignment=None):
     if not assignment:
         return
     column = getUtility(IPortletManager, columnName)
@@ -124,22 +124,20 @@ def addPortlet(context, columnName='plone.leftcolumn', assignment=None):
     manager[chooser.chooseName(None, assignment)] = assignment
 
 
-def removePortlet(context, portletName, columnName='plone.leftcolumn'):
+def removePortlet(context, portletName, columnName="plone.leftcolumn"):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter(
-        (context, manager), IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     # throws a keyerror if the portlet does not exist
     del assignmentMapping[portletName]
 
 
-def blockPortlets(context, columnName='plone.leftcolumn',
-                  inherited=None, group=None, contenttype=None):
-    """True will block portlets, False will show them, None will skip settings.
-    """
+def blockPortlets(
+    context, columnName="plone.leftcolumn", inherited=None, group=None, contenttype=None
+):
+    """True will block portlets, False will show them, None will skip settings."""
 
     manager = getUtility(IPortletManager, name=columnName)
-    assignable = getMultiAdapter(
-        (context, manager), ILocalPortletAssignmentManager)
+    assignable = getMultiAdapter((context, manager), ILocalPortletAssignmentManager)
 
     if group is not None:
         assignable.setBlacklistStatus(GROUP_CATEGORY, group)
@@ -149,18 +147,16 @@ def blockPortlets(context, columnName='plone.leftcolumn',
         assignable.setBlacklistStatus(CONTEXT_CATEGORY, inherited)
 
 
-def hidePortlet(context, portletName, columnName='plone.leftcolumn'):
+def hidePortlet(context, portletName, columnName="plone.leftcolumn"):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter(
-        (context, manager), IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     settings = IPortletAssignmentSettings(assignmentMapping[portletName])
-    settings['visible'] = False
+    settings["visible"] = False
 
 
-def hasPortlet(context, portletName, columnName='plone.leftcolumn'):
+def hasPortlet(context, portletName, columnName="plone.leftcolumn"):
     manager = getUtility(IPortletManager, columnName)
-    assignmentMapping = getMultiAdapter(
-        (context, manager), IPortletAssignmentMapping)
+    assignmentMapping = getMultiAdapter((context, manager), IPortletAssignmentMapping)
     return portletName in assignmentMapping
 
 
@@ -171,26 +167,25 @@ def setPortletWeight(portlet, weight):
     try:
         from collective.weightedportlets import ATTR
         from persistent.dict import PersistentDict
+
         if not hasattr(portlet, ATTR):
             setattr(portlet, ATTR, PersistentDict())
-        getattr(portlet, ATTR)['weight'] = weight
+        getattr(portlet, ATTR)["weight"] = weight
     except ImportError:
         # simply don't do anything in here
         pass
 
 
-def createImage(context, id, file_data, title='', description=''):
-    """create an image and return the object
-    """
+def createImage(context, id, file_data, title="", description=""):
+    """create an image and return the object"""
     img = api.content.create(context, "Image", id, title=title, description=description)
     # FIXME: filename
     img.image = namedfile.NamedBlobImage(file_data, filename="fooXXX")
     return img
 
 
-def createFile(context, id, file, title='', description=''):
-    context.invokeFactory('File', id, title=title,
-                          description=description)
+def createFile(context, id, file, title="", description=""):
+    context.invokeFactory("File", id, title=title, description=description)
     context[id].setFile(file)
     return context[id]
 
@@ -201,21 +196,19 @@ def excludeFromNavigation(obj, exclude=True):
     navigation portlet notice the change
     """
 
-    obj._md['excludeFromNav'] = exclude
+    obj._md["excludeFromNav"] = exclude
 
 
 def getRelativePortalPath(context):
-    """return the path of the plonesite
-    """
-    url = getToolByName(context, 'portal_url')
+    """return the path of the plonesite"""
+    url = getToolByName(context, "portal_url")
     return url.getPortalPath()
 
 
 def getRelativeContentPath(obj):
-    """return the path of the object
-    """
-    url = getToolByName(obj, 'portal_url')
-    return '/'.join(url.getRelativeContentPath(obj))
+    """return the path of the object"""
+    url = getToolByName(obj, "portal_url")
+    return "/".join(url.getRelativeContentPath(obj))
 
 
 def doWorkflowTransition(obj, transition):
@@ -227,8 +220,7 @@ def doWorkflowTransition(obj, transition):
     doWorkflowTransitions([obj], transition)
 
 
-def doWorkflowTransitions(objects=[], transition='publish',
-                          includeChildren=False):
+def doWorkflowTransitions(objects=[], transition="publish", includeChildren=False):
     """use this to publish a/some folder(s) optionally
     including their child elements
     """
@@ -236,15 +228,17 @@ def doWorkflowTransitions(objects=[], transition='publish',
     if not objects:
         return
     if type(objects) != list:
-        objects = [objects, ]
+        objects = [
+            objects,
+        ]
 
-    utils = getToolByName(objects[0], 'plone_utils')
+    utils = getToolByName(objects[0], "plone_utils")
     for obj in objects:
-        path = '/'.join(obj.getPhysicalPath())
+        path = "/".join(obj.getPhysicalPath())
         utils.transitionObjectsByPaths(
             workflow_action=transition,
             paths=[path],
-            include_children=includeChildren
+            include_children=includeChildren,
         )
 
 
@@ -275,9 +269,8 @@ def raptus_hide_for(item, component):
     """hide the specified item in the `raptus.article` component given by it's name
     (eg. ``(item=<Image>, component='imageslider.teaser')`` )
     """
-    components = list(item.Schema()['components'].get(item))
-    item.Schema()['components'].set(
-        item, [c for c in components if not c == component])
+    components = list(item.Schema()["components"].get(item))
+    item.Schema()["components"].set(item, [c for c in components if not c == component])
     item.reindexObject()
 
 
@@ -285,7 +278,6 @@ def raptus_show_for(item, component):
     """show the specified item in the `raptus.article` component given by it's name
     (eg. ``(item=<Image>, component='imageslider.teaser')`` )
     """
-    components = list(item.Schema()['components'].get(item))
-    item.Schema()['components'].set(
-        item, [c for c in components if not c == component])
+    components = list(item.Schema()["components"].get(item))
+    item.Schema()["components"].set(item, [c for c in components if not c == component])
     item.reindexObject()

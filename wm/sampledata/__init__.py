@@ -6,13 +6,12 @@ from zope.interface import implementer
 import logging
 
 
-logger = logging.getLogger('wm.sampledata')
+logger = logging.getLogger("wm.sampledata")
 
 
 @implementer(ISampleDataPlugin)
 class PluginGroup(object):
-    """useful baseclass for grouping plugins by their name
-    """
+    """useful baseclass for grouping plugins by their name"""
 
     PLUGINS = []
 

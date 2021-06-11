@@ -37,5 +37,3 @@ WM_SAMPLEDATA_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(WM_SAMPLEDATA_FIXTURE,),
     name="SampledataLayer:FunctionalTesting",
 )
-
-
