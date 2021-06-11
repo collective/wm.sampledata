@@ -20,7 +20,7 @@ class PluginGroup(object):
 
     def generate(self, context):
         for plugin in self.PLUGINS:
-            if isinstance(plugin, basestring):
+            if isinstance(plugin, str):
                 plugin = getUtility(ISampleDataPlugin, name=plugin)
                 plugin.generate(context)
             else:

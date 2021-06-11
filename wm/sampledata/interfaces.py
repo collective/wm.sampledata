@@ -8,9 +8,9 @@ class ISampleDataPlugin(Interface):
     """
     """
 
-    title = Attribute(u"Plugin Title")
+    title = Attribute("Plugin Title")
 
-    description = Attribute(u"Describes what is being generated")
+    description = Attribute("Describes what is being generated")
 
     def generate(context):
         """Generate sample data of this plugin.

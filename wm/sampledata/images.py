@@ -8,7 +8,7 @@ from io import BytesIO
 import os
 import random
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import requests
 
 
@@ -43,12 +43,12 @@ def _retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=None):
             while mtries > 1:
                 try:
                     return f(*args, **kwargs)
-                except ExceptionToCheck, e:
+                except ExceptionToCheck as e:
                     msg = "%s, Retrying in %d seconds..." % (str(e), mdelay)
                     if logger:
                         logger.warning(msg)
                     else:
-                        print msg
+                        print(msg)
                     time.sleep(mdelay)
                     mtries -= 1
                     mdelay *= backoff
@@ -85,7 +85,7 @@ def get_placeholder_image(width=1024, height=768,
     """see https://placeholder.com/ for explanations
     """
 
-    url = u'http://via.placeholder.com/{w}x{h}/{bkg}/{textcolor}'.format(
+    url = 'http://via.placeholder.com/{w}x{h}/{bkg}/{textcolor}'.format(
         w=width,
         h=height,
         bkg=bkg_color.strip('#'),
@@ -96,7 +96,7 @@ def get_placeholder_image(width=1024, height=768,
         params['text'] = text.encode('utf-8')
 
     if params:
-        url += '?' + urllib.urlencode(params)
+        url += '?' + urllib.parse.urlencode(params)
 
     return _download(url)
 

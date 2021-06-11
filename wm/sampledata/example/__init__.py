@@ -16,9 +16,9 @@ from wm.sampledata.utils import IPSUM_PARAGRAPH
 class DemoContent(object):
     implements(ISampleDataPlugin)
 
-    title = u"Demo Content"
+    title = "Demo Content"
 
-    description = u"""Creates a document with an image and assigns a portlet
+    description = """Creates a document with an image and assigns a portlet
 that displays contact information."""
 
     def generate(self, context):
@@ -27,7 +27,7 @@ that displays contact information."""
         # delete sample document if it exists
         deleteItems(context, pageId)
 
-        context.invokeFactory('Document', id=pageId, title=u"Sample Document")
+        context.invokeFactory('Document', id=pageId, title="Sample Document")
         page = context[pageId]
 
         # download image from lorempixel.com - force colour images from
@@ -36,8 +36,8 @@ that displays contact information."""
         deleteItems(context, imageId)
         createImage(context, imageId, +
                     getRandomImage(category='nature', gray=False),
-                    title=u"Random Image",
-                    description=u"Downloaded from lorempixel.com")
+                    title="Random Image",
+                    description="Downloaded from lorempixel.com")
 
         text = '<img class="image-right" src="%s/@@images/image/mini" />' % (
             imageId) + IPSUM_PARAGRAPH
@@ -52,5 +52,5 @@ that displays contact information."""
 
         import wm.sampledata.example as myModule
         portlet = StaticAssignment(
-            u"Contact", getFileContent(myModule, 'portlet.html'))
+            "Contact", getFileContent(myModule, 'portlet.html'))
         addPortlet(page, 'plone.leftcolumn', portlet)

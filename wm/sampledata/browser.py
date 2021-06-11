@@ -34,17 +34,17 @@ class SampleDataView(BrowserView):
             plugin = getUtility(ISampleDataPlugin, name=plugin)
             result = plugin.generate(self.context)
             IStatusMessage(self.request).addStatusMessage(
-                u"successfully ran %s" % plugin.title, 'info')
-        except ComponentLookupError, e:
+                "successfully ran %s" % plugin.title, 'info')
+        except ComponentLookupError as e:
             IStatusMessage(self.request).addStatusMessage(
-                u"could not find plugin %s" % plugin, 'error')
+                "could not find plugin %s" % plugin, 'error')
             logger.exception("could not find plugin %s" % plugin)
 
             if debug:
                 raise e
-        except Exception, e:
+        except Exception as e:
             IStatusMessage(self.request).addStatusMessage(
-                u"error running %s: %s" % (plugin.title, str(e)), 'error')
+                "error running %s: %s" % (plugin.title, str(e)), 'error')
             logger.exception(
                 ("error running %s - try @@sampledata/run?"
                  "plugin=<plugin-name>&debug=True") % (plugin.title))
