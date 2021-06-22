@@ -138,12 +138,12 @@ def test_stub(f):
 
 @test_stub
 def getFlickrImage(
-    width=1024, height=768, keywords=[], match_all_keywords=False, gray=False
+    width=1024, height=768, keywords=[], match_all_keywords=True, gray=False
 ):
     """obtains an image from loremflickr.com.
 
-    If you set match_all_keywords to true it will
-    search for all keywords (AND).
+    If you set match_all_keywords to false it will
+    search for any of the keywords (OR).
 
     Set gray to True to get a grayscale image.
     """
@@ -155,7 +155,7 @@ def getFlickrImage(
         params.append("g")
 
     params.append("%d/%d" % (width, height))
-    params.append(",".join(keywords))
+    params.append(",".join(keywords or []))
     if match_all_keywords:
         params.append("all")
 
