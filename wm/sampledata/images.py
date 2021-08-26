@@ -230,6 +230,19 @@ def getRandomFlickrImage(
         gray=gray,
     )
 
+def random_dimensions(long_edge=1024, landscape=None, ratios=RATIOS):
+    """returns (width, height) for random ratio and random orientation"""
+    ratio = random.choice(ratios)
+    ratio = float(ratio[0]) / ratio[1]
+    if landscape is None:
+        landscape = random.choice([True, False])
+    if landscape:
+        width = long_edge
+        height = int(long_edge / ratio)
+    else:
+        height = long_edge
+        width = int(long_edge / ratio)
+    return width, height
 
 def getRandomImage(
     long_edge=1024, category=None, gray=None, landscape=None, ratios=RATIOS
@@ -240,20 +253,9 @@ def getRandomImage(
     set gray to True to force grayscale pictures and to False to force color
     pictures
     """
-    ratio = random.choice(ratios)
-    ratio = float(ratio[0]) / ratio[1]
-
-    if landscape is None:
-        landscape = random.choice([True, False])
+    width, height = random_dimensions(long_edge, landscape, ratios)
 
     if gray is None:
         gray = random.choice([True, False])
-
-    if landscape:
-        width = long_edge
-        height = int(long_edge / ratio)
-    else:
-        height = long_edge
-        width = int(long_edge / ratio)
 
     return getImage(width, height, category=category, gray=gray)

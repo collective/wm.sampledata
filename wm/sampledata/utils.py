@@ -16,6 +16,7 @@ from wm.sampledata.images import getFlickrImage
 from wm.sampledata.images import getImage
 from wm.sampledata.images import getRandomFlickrImage
 from wm.sampledata.images import getRandomImage
+from wm.sampledata.images import random_dimensions
 from zExceptions import BadRequest
 from zope import event
 from zope.component import getMultiAdapter
