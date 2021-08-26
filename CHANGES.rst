@@ -4,8 +4,11 @@ Changelog
 0.7.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Drop support for Python2
+- Support Python3 and Plone >= 5.2 only
+- Add CSRF Protection to links to run a plugin
+- remove Archetypes specific utility methods
+- loremflickr: search for all keywords (AND) by default (former default was OR)
 
 0.7.0 (2021-04-29)
 ------------------
